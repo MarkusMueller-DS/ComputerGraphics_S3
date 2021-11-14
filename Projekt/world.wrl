@@ -4,6 +4,7 @@
 # Definition Skilift-Stuetzen 
 DEF Skilift Transform {
     scale 1 0.8 1
+    translation 3.5 1.8 -4.5
     children [
         # Stange nach oben
         Transform {
@@ -55,43 +56,14 @@ DEF Skilift Transform {
     ]
 }
 
-Transform {
+
+# Definition Baeume
+DEF Baum Transform {
+    scale 0.7 0.8 0.7
     children [
-        # Gerade
-        Transform {
-            children [
-                Shape {
-                    appearance Appearance {
-                        material Material {
-                            diffuseColor 1 1 1
-                        }
-                    }
-                    geometry Box {
-                            size 8 0.5 10 
-                    }
-                }
-           ]
-        }
-        # Hang
-        Transform {
-            translation 8.15 2.45 0 
-            rotation 0 0 1 0.524
-            children [
-                Shape {
-                    appearance Appearance {
-                        material Material {
-                            diffuseColor 1 1 1
-                        }
-                    }
-                    geometry Box {
-                        size 10 0.5 10 
-                    }
-                }
-           ]
-        }
         # Baum
         Transform {
-            translation 0 1.2 0 
+            translation 0 1.1 0 
             #rotation 0 0 1 0.524
             children [
                 Shape {
@@ -101,15 +73,15 @@ Transform {
                         }
                     }
                     geometry Cylinder {
-                        height 2
-                        radius 0.4 
+                        height 2 
+                        radius 0.3 
                     }
                 }
            ]
         }
         # Blätter
         Transform {
-            translation 0 2 0 
+            translation 0 1.8 0 
             children [
                 # Blatt 1
                 Transform {
@@ -164,10 +136,49 @@ Transform {
                 }
            ]
         }
+    ]
+}
+
+
+
+Transform {
+    children [
+        # Gerade
+        Transform {
+            children [
+                Shape {
+                    appearance Appearance {
+                        material Material {
+                            diffuseColor 1 1 1
+                        }
+                    }
+                    geometry Box {
+                            size 8 0.5 10 
+                    }
+                }
+           ]
+        }
+        # Hang
+        Transform {
+            translation 8.15 2.45 0 
+            rotation 0 0 1 0.524
+            children [
+                Shape {
+                    appearance Appearance {
+                        material Material {
+                            diffuseColor 1 1 1
+                        }
+                    }
+                    geometry Box {
+                        size 10 0.5 10 
+                    }
+                }
+           ]
+        }
         # Haus
         Transform {
             scale 0.8 0.8 0.8
-            translation 0 1 -3
+            translation 0 0.8 -3
             children [
                 # Haus Box
                 Transform {
@@ -222,25 +233,111 @@ Transform {
                 }
             ]
         }
-        # # Skilift
-        # Transform {
-        #     children [
-        #         # Pole 1
-        #         Transform {
-        #             scale 1 0.8 1
-        #             translation 3 1.8 -4.5
-        #             children [
-        #                 USE Skilift
-        #             ]
-        #         }
-        #     ]
-        # }
+        #Skilift Pole 2
+        Transform {
+            translation 4 2 0 
+            children [
+                USE Skilift
+            ]
+        }
+        #Skilift Pole 3
+        Transform {
+            translation 8 4.3 0 
+            children [
+                USE Skilift
+            ]
+        }
+        # Kabel
+        Transform {
+            rotation 0 0 1 -1.07
+            translation 7.45 5.1 -3.28
+            children [
+                Shape {
+                    appearance Appearance {
+                        material Material {
+                            diffuseColor 0.2 0.2 0.2
+                        } 
+                    }
+                    geometry Cylinder {
+                        radius 0.05
+                        height 9.2 
+                        bottom TRUE
+                        side TRUE
+                    }
+                }
+            ]
+        }
+        # Baum 2
+        Transform{
+            translation -1 0 2
+            scale 0.6 0.9 0.6 
+            children [
+                USE Baum
+            ]
+        } 
+        # Baum 3
+        Transform{
+            translation -3 0 0 
+            scale 0.6 1.3 0.6
+            children [
+                USE Baum
+            ]
+        } 
+        # Baum 4
+        Transform{
+            translation 8 2.3 4.3
+            scale 0.6 0.8 0.6
+            children [
+                USE Baum
+            ]
+        } 
+        # Baum 5
+        Transform{
+            translation 6 1.2 -4
+                scale 0.6 0.9 0.6 
+            children [
+                USE Baum
+            ]
+        } 
+        # Baum 6
+        Transform{
+                translation 6 1.2 3.5 
+            scale 0.8 0.9 1
+            children [
+                USE Baum
+            ]
+        } 
+        # Baum 7
+        Transform{
+            translation -3 0 4 
+            scale 0.7 0.9 0.7 
+            children [
+                USE Baum
+            ]
+        } 
+        # Baum 8
+        Transform{
+            translation 0 0 4
+            scale 0.9 1.2 0.9
+            children [
+                USE Baum
+            ]
+        } 
+        # Baum 9
+        Transform{
+            translation 3 0 4
+            scale 0.8 0.9 0.8 
+            children [
+                USE Baum
+            ]
+        } 
+        # Baum 10 
+        Transform{
+            translation -3 0 -4 
+            scale 0.8  1.2 0.8
+            children [
+                USE Baum
+            ]
+        } 
     ]
 }           
-               
-               
-               
-               
-               
-               
-               

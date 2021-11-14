@@ -25,7 +25,7 @@ PROTO Prisma [
                 } 
 
             } #Appearance
-        } #Prisma
+    } #Prisma
 }
 
 Prisma { }
