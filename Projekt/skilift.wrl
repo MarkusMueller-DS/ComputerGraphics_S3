@@ -1,6 +1,7 @@
 #VRML V2.0 utf8
 
-DEF Skilift Group {
+DEF Skilift Transform {
+    translation 1 1 1
     children [
         # Stange nach oben
         Transform {
@@ -54,13 +55,13 @@ DEF Skilift Group {
 
 # Transform {
 #     children [
-#         # Pole 1
+#         # Pole 2 
 #         Transform {
 #             children [
 #                 USE Skilift
 #             ]
 #         }
-#         # Pole 2
+#         # Pole 3
 #         Transform {
 #             translation 2 0 0
 #             children [
