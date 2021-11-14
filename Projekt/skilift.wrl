@@ -1,0 +1,71 @@
+#VRML V2.0 utf8
+
+DEF Skilift Group {
+    children [
+        # Stange nach oben
+        Transform {
+            children [
+                Shape {
+                    appearance Appearance {
+                        material Material {
+                            diffuseColor 0.31 0.31 0.31 
+                        } 
+                    }
+                    geometry Box {
+                        size 0.3 4 0.3
+                    }
+                }
+            ]
+        }
+        # Stange nach vorne
+        Transform {
+            translation 0 1.8 0.8 
+            children [
+                Shape {
+                    appearance Appearance {
+                        material Material {
+                            diffuseColor 0.31 0.31 0.31 
+                        } 
+                    }
+                    geometry Box {
+                        size 0.3  0.2 1.5 
+                    }
+                }
+            ]
+        }
+        # Kabelaufhaengung 
+        Transform {
+            translation 0 1.5 1.2
+            children [
+                Shape {
+                    appearance Appearance {
+                        material Material {
+                            diffuseColor 0.31 0.31 0.31 
+                        } 
+                    }
+                    geometry Box {
+                        size 0.3  0.4 0.3
+                    }
+                }
+            ]
+        }
+    ]
+}        
+
+# Transform {
+#     children [
+#         # Pole 1
+#         Transform {
+#             children [
+#                 USE Skilift
+#             ]
+#         }
+#         # Pole 2
+#         Transform {
+#             translation 2 0 0
+#             children [
+#                 USE Skilift
+#             ]
+#         }
+#     ]
+# }

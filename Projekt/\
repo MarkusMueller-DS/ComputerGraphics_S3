@@ -1,60 +1,5 @@
 #VRML V2.0 utf8
 
-
-# Definition Skilift-Stuetzen 
-DEF Skilift Transform {
-    scale 1 0.8 1
-    children [
-        # Stange nach oben
-        Transform {
-            children [
-                Shape {
-                    appearance Appearance {
-                        material Material {
-                            diffuseColor 0.31 0.31 0.31 
-                        } 
-                    }
-                    geometry Box {
-                        size 0.3 4 0.3
-                    }
-                }
-            ]
-        }
-        # Stange nach vorne
-        Transform {
-            translation 0 1.8 0.8 
-            children [
-                Shape {
-                    appearance Appearance {
-                        material Material {
-                            diffuseColor 0.31 0.31 0.31 
-                        } 
-                    }
-                    geometry Box {
-                        size 0.3  0.2 1.5 
-                    }
-                }
-            ]
-        }
-        # Kabelaufhaengung 
-        Transform {
-            translation 0 1.5 1.2
-            children [
-                Shape {
-                    appearance Appearance {
-                        material Material {
-                            diffuseColor 0.31 0.31 0.31 
-                        } 
-                    }
-                    geometry Box {
-                        size 0.3  0.4 0.3
-                    }
-                }
-            ]
-        }
-    ]
-}
-
 Transform {
     children [
         # Gerade
@@ -209,38 +154,64 @@ Transform {
                                         0 1 0 # 7 links oben
                                     ]
                                 }
-                                coordIndex [
-                                    0 1 2 3 -1
-                                    7 6 5 4 -1
-                                    0 3 4 -1
-                                    1 5 2 -1
-                                    4 5 1 0 -1
-                                ]     
+                                    coordIndex [
+                                        0 1 2 3 -1
+                                        7 6 5 4 -1
+                                        0 3 4 -1
+                                        1 5 2 -1
+                                        4 5 1 0 -1
+                                    ]
                             }
-                        }    
+                        }
                     ]
                 }
             ]
         }
-        # # Skilift
-        # Transform {
-        #     children [
-        #         # Pole 1
-        #         Transform {
-        #             scale 1 0.8 1
-        #             translation 3 1.8 -4.5
-        #             children [
-        #                 USE Skilift
-        #             ]
-        #         }
-        #     ]
-        # }
+        # Skilift
+        Transform {
+            children [
+                # Pole
+                Transfrom {
+                    children [
+                        # Stange nach oben
+                        Transform {
+                            children [
+                                Shape {
+                                    appearance Appearance {
+                                        material Material {
+                                            diffuseColor 0.66 0.66 0.66 
+                                        } 
+                                    }
+                                    geometry Box {
+                                        size 0.3 5 0.3
+                                    }
+                                }
+                            ]
+                        }
+                        Transform {
+                            children [
+                                Shape {
+                                    appearance Appearance {
+                                        material Material {
+                                            diffuseColor 0.66 0.66 0.66 
+                                        } 
+                                    }
+                                    geometrz Box {
+                                        size 3 0.3 0.3
+                                    }
+                                }
+                            ]
+                        }
+                    ]
+                }
+                # Kabel
+                Transfrom {
+                    children [
+                        Shape {
+                        }
+                    ]
+                }
+            ]
+        }
     ]
-}           
-               
-               
-               
-               
-               
-               
-               
+}
