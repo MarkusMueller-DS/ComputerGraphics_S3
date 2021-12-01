@@ -10,9 +10,11 @@ EXTERNPROTO Skifahrer [
 ]
 
 
+# Enternem vom default Licht
 NavigationInfo {
     headlight FALSE
 }
+
 
 # directionalLight
 DEF DLight DirectionalLight {
@@ -95,10 +97,10 @@ DEF Skilift Transform {
         }
         Transform {
             translation 0 1.8 0
-            rotation 1 0 0 -0.65
+            rotation 1 0 0 -0.8
             children [
                 DEF SPOT SpotLight {
-                    intensity 0.8
+                    intensity 0.7
                     direction 0 -1 0
                     color 0 1 0 
                     radius 100 
@@ -112,7 +114,7 @@ DEF Skilift Transform {
 }
 
 
-# Definition Baeume
+# Definition Bäume
 DEF Baum Transform {
     scale 0.7 0.8 0.7
     children [
@@ -530,10 +532,115 @@ Transform {
                 }
             ]
         }
+        # Werbe-Video-Wand
+        Transform {
+            translation 14 7 3
+            rotation 0 1 0 -1.7
+            children [
+                # Werbefläche
+                Transform {
+                    children [
+                        Transform {
+                            children [
+                                Shape {
+                                    appearance Appearance {
+                                        texture MovieTexture {
+                                            loop TRUE
+                                            url "ski.gif"
+                                            startTime 1
+                                        }
+                                    }
+                                    geometry IndexedFaceSet {
+                                        coord Coordinate {
+                                            point [
+                                                # Vorderseite
+                                                0 0 0.2     # 0
+                                                1.7 0 0.2   # 1
+                                                1.7 1.7 0.2 # 2
+                                                0 1.7 0.2   # 3
+
+                                            ]
+                                        }
+                                        coordIndex [
+                                            0 1 2 3 -1 
+                                        ]
+                                    }
+                                }
+                            ]
+                        }
+                        Transform {
+                            children [
+                                Shape {
+                                    appearance Appearance {
+                                        material Material { }
+                                    }
+                                    geometry IndexedFaceSet {
+                                        coord Coordinate {
+                                            point [
+                                                # Vorderseite
+                                                0 0 0.2     # 0
+                                                1.7 0 0.2   # 1
+                                                1.7 1.7 0.2 # 2
+                                                0 1.7 0.2   # 3
+                                                #Rückseite
+                                                0 0 0       # 4
+                                                1.7 0 0     # 5
+                                                1.7 1.7 0   # 6
+                                                0 1.7 0     # 7
+
+                                            ]
+                                        }
+                                        coordIndex [
+                                            7 6 5 4 -1
+                                            1 5 6 2 -1
+                                            2 6 7 3 -1
+                                            0 3 7 4 -1
+                                            0 4 5 1 -1
+                                        ]
+                                    }
+                                }
+                            ]
+                        }
+                    ]
+                }
+                # Standbeine
+                Transform {
+                    translation 0 -0.65 0
+                    children [
+                        Transform {
+                            translation 0.3 0 0.1
+                            children [
+                                Shape {
+                                    appearance Appearance {
+                                        material Material { }
+                                    }
+                                    geometry Box {
+                                        size 0.2 1.3 0.2
+                                    }
+                                }
+                            ]
+                        }
+                        Transform {
+                            translation 1.4 0 0.1
+                            children [
+                                Shape {
+                                    appearance Appearance {
+                                        material Material { }
+                                    }
+                                    geometry Box {
+                                        size 0.2 1.3 0.2
+                                    }
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
     ]
 }      
 
-
+#### Viewpoints ####
 # Front
 Viewpoint {
     description "Front"
@@ -573,8 +680,7 @@ Transform {
     ]
 }
 
-# Background
-# http://www.c3.hu/cryptogram/vrmltut/part7.html
+#### Background ####
 Background {
     groundAngle   1.5
     groundColor   [ 1 1 1,
@@ -589,6 +695,8 @@ Background {
     rightUrl "bg.jpg"   
 }
 
+
+#### Licht ####
 # Schalter für Scheinwerfer
 Transform {
     translation 2 0.4 0
@@ -598,8 +706,6 @@ Transform {
             appearance Appearance {
                 material Material {
                     diffuseColor 0.1 0.6 0.1
-                    specularColor 0.3 0.3 0.3
-                    #shininess 0.2
                     emissiveColor 0.1 0.6 0.1
                 }
             }
@@ -618,7 +724,6 @@ Transform {
             appearance Appearance {
                 material Material {
                     diffuseColor 0.1 0.1 0.6
-                    specularColor 0.3 0.3 0.3
                     emissiveColor 0.1 0.1 0.6
                 }
             }
@@ -638,7 +743,6 @@ Transform {
             appearance Appearance {
                 material Material {
                     diffuseColor 0.6 0.1 0.1
-                    specularColor 0.3 0.3 0.3
                     emissiveColor 0.6 0.1 0.1
                 }
             }
@@ -649,8 +753,8 @@ Transform {
     ]
 }
 
-
-# http://tecfa.unige.ch/guides/vrml/vrmlman/node23.html
+# code from: http://tecfa.unige.ch/guides/vrml/vrmlman/node23.html
+# Scheinwerfer
 DEF lightScript Script {
     eventIn SFBool lightIsActive
     eventOut SFBool fixLightState
@@ -672,6 +776,7 @@ DEF lightScript Script {
     ]
 }
 
+# Headlight
 DEF lightScript2 Script {
     eventIn SFBool lightIsActive
     eventOut SFBool fixLightState
@@ -693,6 +798,7 @@ DEF lightScript2 Script {
     ]
 }
 
+# Fackel
 DEF lightScript3 Script {
     eventIn SFBool lightIsActive
     eventOut SFBool fixLightState
@@ -715,84 +821,74 @@ DEF lightScript3 Script {
 }
 
 
-# ANIMATIONS
-
-DEF timerPOS TimeSensor {
+#### ANIMATIONS ####
+# Timer
+DEF timer TimeSensor {
     cycleInterval 30 
     loop FALSE
     startTime -1 
     stopTime 0
 }
 
-# DEF timerORI TimeSensor {
-#     cycleInterval 30
-#     loop FALSE
-#     startTime -1
-#     stopTime 0
-# }
-
-
 # Position der Liftstange
 DEF piLift PositionInterpolator {
     key [
-        0.81    # Lift start
-        0.96    # Lift oben
+        0.81        # Lift start
+        0.96        # Lift oben
     ]
     keyValue [
-        0 0 0 # Startlift
-        10 5.5 0  
+        0 0 0       # Start Lift
+        10 5.5 0    # Ende Lift
     ]
 }
-
 
 # Position des Skifahrers
 DEF pi PositionInterpolator {
     key [
             0           # 1 Startpunkt
-            0.22       # Kurve 1 Sp
+            0.22        # Kurve 1 Sp
             0.221       # Änderung der Höhe (nur relevant für POS)
             0.40        # Änderung der Höhe (nur relevant für POS)
             0.43        # Kurve 2 Sp
             0.61        # Kurve 3 Sp
-            0.62        # 5 Übergang zur Ebene
-            0.63        # 6 Drehung um x-Achse auf Ebene
-            0.7         # 7 Am Haus
-            0.76        # 8 am Haus warten
-            0.8         # 9 Lift unten
-            0.81        # 10 Lift start
-            0.96        # 11 Lift oben
-            1           # 12 Endpunkt
+            0.62        # Übergang zur Ebene
+            0.63        # Drehung um x-Achse auf Ebene
+            0.7         # Am Haus
+            0.76        # am Haus warten
+            0.8         # Lift unten
+            0.81        # Lift start
+            0.96        # Lift oben
+            1           # Endpunkt
     ]
     keyValue [
         0 0 0           # 1 Startpunkt
-        20 -9.33 16.6        # Kurve 1 Sp
-        20 -10 16.4         # 
-        0 -18.5 31.5
-        0 -18.7 33.2        # Kurve 2 Sp
-        10 -27.99 49          # Kurve 3 Sp
-        10 -28.2 50      # 2 Übergang zur Ebene
-        10 -29 52      # 3 Drehung um x-Achse auf Ebene 
-        -4 -29 60      # 4 Am Haus
-        -4 -29 60      # 5 am Haus warten
-        -4.5 -29 54      # 6 Lift unten
-        -4.5 -29.8 52     #7 Lift start
-        -5 0 0           # 8 Lift oben
-        0 0 0           # 9 Endpunkt
+        20 -9.33 16.6   # Kurve 1 Sp
+        20 -10 16.4     # Änderung der Höhe
+        0 -18.5 31.5    # Änder der Höhe
+        0 -18.7 33.2    # Kurve 2 Sp
+        10 -27.99 49    # Kurve 3 Sp
+        10 -28.2 50     # Übergang zur Ebene
+        10 -29 52       # Drehung um x-Achse auf Ebene 
+        -4 -29 60       # Am Haus
+        -4 -29 60       # am Haus warten
+        -4.5 -29 54     # Lift unten
+        -4.5 -29.8 52   # Lift start
+        -5 0 0          # Lift oben
+        0 0 0           # Endpunkt
     ]
 }
     
-
 # Rotation y-Achse
 DEF oi OrientationInterpolator {
     key [
-        0           # Startpunkt#
-        0.14        # Rotation zur Kurve 1 hin
-        0.19         # Kruve 1 Eintritt
+        0           # Startpunkt
+        0.1         # Rotation zur Kurve 1 hin
+        0.19        # Kruve 1 Eintritt
         0.21        # Kurve 1 Sp
         0.23        # Kurve 1 Austritt
         0.41        # Kurve 2 E
         0.43        # Kurve 2 SP
-        0.44        # Kurve 2 A
+        0.45        # Kurve 2 A
         0.58        # Kurve 3 E
         0.6         # Kurve 3 SP
         0.62        # Kurve 3 A
@@ -806,82 +902,80 @@ DEF oi OrientationInterpolator {
         1           # 9 Endpunkt
     ]
     keyValue [
-        0 0 0 0     # 1 Startpunkt
-        0 1 0 0.9       # Rotation zur Kurve 1
-        0 1 0 0.9       # Kruve 1 E
-        0 1 0 -0.2      # Kurve 1 Sp
-        0 1 0 -0.9      # Kurve 1 A
-        0 1 0 -0.9      # Kurve 2 E
-        0 1 0 0.2       # Kurve 2 Sp
-        0 1 0 0.6       # Kurve 2 A
-        0 1 0 0.6       # Kurve 3 E
-        0 1 0 -0.2      # Kurve 3 Sp
-        0 1 0 -0.9      # Kurvr 3 A
-        0 1 0 -0.9            # 2 Übergang zur Ebene
-        0 1 0 -0.8        # 3 Drehung um x-Achse auf Ebene
-        0 1 0 -1.570796327         # 4 Am Haus
-        0 1 0 -1.570796327        # 5 am Haus warten
-        0 1 0 -3.141592654         # 6 Lift unten
-        0 1 0 -3.141592654      # 7 Lift start
-        0 1 0 -3.141592654        # 8 Lift oben
-        0 0 0 3.141892654        # 9 Endpunkt
+        0 0 0 0             # 1 Startpunkt
+        0 1 0 0.9           # Rotation zur Kurve 1
+        0 1 0 0.9           # Kruve 1 E
+        0 1 0 -0.2          # Kurve 1 Sp
+        0 1 0 -0.9          # Kurve 1 A
+        0 1 0 -0.9          # Kurve 2 E
+        0 1 0 0.2           # Kurve 2 Sp
+        0 1 0 0.5           # Kurve 2 A
+        0 1 0 0.5           # Kurve 3 E
+        0 1 0 -0.2          # Kurve 3 Sp
+        0 1 0 -0.9          # Kurve 3 A
+        0 1 0 -0.9          # Übergang zur Ebene
+        0 1 0 -0.8          # Drehung um x-Achse auf Ebene
+        0 1 0 -1.570796327  # Am Haus
+        0 1 0 -1.570796327  # am Haus warten
+        0 1 0 -3.141592654  # Lift unten
+        0 1 0 -3.141592654  # Lift start
+        0 1 0 -3.141592654  # Lift oben
+        0 0 0 3.141892654   # Endpunkt
     ]
 }
 
 # Rotation x-Achse
 DEF oi2 OrientationInterpolator {
     key [
-        0           # 1 Startpunkt
-        0.14        # Rotation zur Kurve 1 
-        0.19       # 2 Kruve 1 Eintritt
-        0.21       # Kurve 1 Sp
-        0.23        #Kurve 1 Austritt
-        0.41        # Kurve 2 E
-        0.43        # Kurve 2 Sp
-        0.45        # Kurve 2 A
-        0.58        # Kurve 3 E
-        0.6         # Kurve 3 Sp
-        0.62        # Kurve 3 A
-        0.62        # 2 Übergang zur Ebene
-        0.63        # 3 Drehung um x-Achse auf Ebene
-        0.7         # 4 Am Haus
-        0.76        # 5 am Haus warten
-        0.8         # 6 Lift unten
-        0.81        # 7 Lift start
-        0.96        # 8 Lift oben
-        1           # 9 Endpunkt
+        0               # Startpunkt
+        0.1             # Rotation zur Kurve 1 
+        0.19            # Kruve 1 Eintritt
+        0.21            # Kurve 1 Sp
+        0.23            # Kurve 1 Austritt
+        0.41            # Kurve 2 E
+        0.43            # Kurve 2 Sp
+        0.45            # Kurve 2 A
+        0.58            # Kurve 3 E
+        0.6             # Kurve 3 Sp
+        0.62            # Kurve 3 A
+        0.62            # Übergang zur Ebene
+        0.63            # Drehung um x-Achse auf Ebene
+        0.7             # Am Haus
+        0.76            # am Haus warten
+        0.8             # Lift unten
+        0.81            # Lift start
+        0.96            # Lift oben
+        1               # Endpunkt
     ]
     keyValue [
-        1 0 0 0.525         # 1 Startpunkt
-        1 0 0 0.3         # Rotation zur Kurve 1
-        1 0 0 0.3       # 2 Kruve 1
-        1 0 0 0.4       # 2 Kruve 1 Sp
-        1 0 0 0.3       # 2 Kruve 1
-        1 0 0 0.3      # 3 Kurve 2
-        1 0 0 0.4      # 3 Kurve 2 Sp
-        1 0 0 0.3      # 3 Kurve 2
-        1 0 0 0.3        # 4 Kurve 3
-        1 0 0 0.4        # 4 Kurve 3 Sp
-        1 0 0 0.4        # 4 Kurve 3
-        1 0 0 0.4         # 2 Übergang zur Ebene
-        0 0 0 0    # 3 Drehung um x-Achse auf Ebene
-        0 0 0 0    # 4 Am Haus
-        0 0 0 0    # 5 am Haus warten
-        0 0 0 0    # 6 Lift unten
-        1 0 0 -0.525          # 7 Lift start
-        1 0 0 -0.525         # 8 Lift oben
-        1 0 0 0.525         # 9 Endpunkt
+        1 0 0 0.525     # Startpunkt
+        1 0 0 0.3       # Rotation zur Kurve 1
+        1 0 0 0.3       # Kruve 1 E
+        1 0 0 0.4       # Kruve 1 Sp
+        1 0 0 0.3       # Kruve 1 A
+        1 0 0 0.3       # Kurve 2 E
+        1 0 0 0.4       # Kurve 2 Sp
+        1 0 0 0.3       # Kurve 2 A
+        1 0 0 0.3       # Kurve 3 E
+        1 0 0 0.4       # Kurve 3 Sp
+        1 0 0 0.4       # Kurve 3 A
+        1 0 0 0.4       # Übergang zur Ebene
+        0 0 0 0         # Drehung um x-Achse auf Ebene
+        0 0 0 0         # Am Haus
+        0 0 0 0         # am Haus warten
+        0 0 0 0         # Lift unten
+        1 0 0 -0.525    # Lift start
+        1 0 0 -0.525    # Lift oben
+        1 0 0 0.525     # Endpunkt
     ]
 }
 
 
 
-#ROUTES
-
+#### ROUTES ####
 # Lichtschalter - Scheinwerfer
 ROUTE ScheinwerferSchalter.isActive TO lightScript.lightIsActive
 ROUTE lightScript.fixLightState TO SPOT.set_on
-
 
 # Lichtschalter - DirectionalLight
 ROUTE LichtSchalter.isActive TO lightScript2.lightIsActive
@@ -890,16 +984,15 @@ ROUTE lightScript2.fixLightState TO DLight.set_on
 ROUTE FackelSchalter.isActive TO lightScript3.lightIsActive
 ROUTE lightScript3.fixLightState TO Fackellicht.set_on
 
-# Annimation
+#### Annimation ####
 # connect timer to touchsensor
-ROUTE skierTouch.touchTime TO timerPOS.set_startTime
-
+ROUTE skierTouch.touchTime TO timer.set_startTime
 
 # connect timer to PositionInterpolator
-ROUTE timerPOS.fraction_changed TO pi.set_fraction
-ROUTE timerPOS.fraction_changed TO oi.set_fraction
-ROUTE timerPOS.fraction_changed TO oi2.set_fraction
-ROUTE timerPOS.fraction_changed TO piLift.set_fraction
+ROUTE timer.fraction_changed TO pi.set_fraction
+ROUTE timer.fraction_changed TO oi.set_fraction
+ROUTE timer.fraction_changed TO oi2.set_fraction
+ROUTE timer.fraction_changed TO piLift.set_fraction
 
 # connect PositionInterporlator to object
 ROUTE pi.value_changed TO skier.set_translation

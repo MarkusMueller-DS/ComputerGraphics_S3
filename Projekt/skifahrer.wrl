@@ -116,6 +116,17 @@ PROTO Skifahrer [
                             radius 0.7
                         }
                     }
+                    Transform {
+                        translation 0 0 -10
+                        children [
+                            Viewpoint {
+                                description IS desc
+                                orientation 0 1 0 -3.14159265
+                                fieldOfView 0.9
+                            }
+                        ]
+                    }
+                   
                ]
             }
             # Arm links
