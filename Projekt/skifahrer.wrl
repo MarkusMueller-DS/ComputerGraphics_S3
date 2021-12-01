@@ -116,15 +116,6 @@ PROTO Skifahrer [
                             radius 0.7
                         }
                     }
-                    Transform {
-                        translation 0 0 -10 
-                        children [
-                            Viewpoint {
-                                description IS desc  
-                                orientation 0 1 0 3.14159265 
-                            }
-                        ]
-                    }
                ]
             }
             # Arm links
@@ -220,6 +211,56 @@ PROTO Skifahrer [
                     }
                ]
             }
+            # Fackel
+            Transform {
+                rotation 1 0 0 3.75
+                translation 0 3.5 1.8
+                children [
+                    Shape {
+                        appearance Appearance {
+                            material Material {
+                                diffuseColor 0.8 0 0
+                                transparency 0.5
+                            }
+                        }   
+                        geometry Cone {
+                            bottomRadius 0.3
+                        }   
+                    }
+                ]
+            }
+            Transform {
+                translation 0 4.3 2.35
+                children [
+                    Transform {
+                        children [
+                            Shape {
+                                appearance Appearance {
+                                    material Material {
+                                        diffuseColor 0.8 0 0
+                                        transparency 0.5
+                                     }
+                                }
+                                geometry Sphere {
+                                    radius 0.25
+                                }
+                            }
+                        ]
+                    }
+                ]
+            }
+            # Fackellicht
+            Transform {
+                translation 0 4.3 2.35
+                children [
+                    DEF Fackellicht PointLight {
+                        on FALSE
+                        intensity 0.5
+                        color 1 0 0
+                    }
+                ]
+            }
         ]
     }
 }
+Skifahrer { }

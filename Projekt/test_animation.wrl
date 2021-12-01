@@ -1,0 +1,49 @@
+#VRML V2.0 utf8
+
+DEF box Transform {
+    children [
+        DEF CubeTouch TouchSensor { }
+        Shape {
+            appearance Appearance {
+                material Material { }
+            }
+            geometry Box { }
+        }    
+    ]
+}
+
+
+Viewpoint { position 0 3 20 } 
+
+# timer
+DEF timer TimeSensor {
+    cycleInterval 6
+    startTime -1
+    stopTime 0
+    loop FALSE
+}
+
+DEF pi PositionInterpolator {
+    # define seconds
+    key [
+        0
+        0.25
+        0.5
+        0.75
+        1
+    ]
+    # right -> up -> left -> down
+    keyValue [
+        0 0 0,
+        4 0 0,
+        4 2 0,
+        0 2 0,
+        0 0 0
+    ]
+}
+# connect touchsensor with timesensors
+ROUTE CubeTouch.touchTime TO timer.set_startTime
+# connect timer to positionInterpolator
+ROUTE timer.fraction_changed TO pi.set_fraction
+# connect positionInterpolator to object
+ROUTE pi.value_changed TO box.set_translation
