@@ -867,7 +867,7 @@ DEF pi PositionInterpolator {
         0 -18.5 31.5    # Änder der Höhe
         0 -18.7 33.2    # Kurve 2 Sp
         10 -27.99 49    # Kurve 3 Sp
-        10 -28.2 50     # Übergang zur Ebene
+        10 -28.8 50     # Übergang zur Ebene
         10 -29 52       # Drehung um x-Achse auf Ebene 
         -4 -29 60       # Am Haus
         -4 -29 60       # am Haus warten
@@ -958,8 +958,8 @@ DEF oi2 OrientationInterpolator {
         1 0 0 0.3       # Kurve 2 A
         1 0 0 0.3       # Kurve 3 E
         1 0 0 0.4       # Kurve 3 Sp
-        1 0 0 0.4       # Kurve 3 A
-        1 0 0 0.4       # Übergang zur Ebene
+        1 0 0 0.5       # Kurve 3 A
+        1 0 0 0.3       # Übergang zur Ebene
         0 0 0 0         # Drehung um x-Achse auf Ebene
         0 0 0 0         # Am Haus
         0 0 0 0         # am Haus warten
@@ -981,6 +981,7 @@ ROUTE lightScript.fixLightState TO SPOT.set_on
 ROUTE LichtSchalter.isActive TO lightScript2.lightIsActive
 ROUTE lightScript2.fixLightState TO DLight.set_on
 
+# Fackel
 ROUTE FackelSchalter.isActive TO lightScript3.lightIsActive
 ROUTE lightScript3.fixLightState TO Fackellicht.set_on
 
